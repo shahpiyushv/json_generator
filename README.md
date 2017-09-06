@@ -1,5 +1,7 @@
 # json_generator
-A simple JSON generator with flushing capability
+A simple JSON (JavasScript Object Notation) generator with flushing capability.
+Details of JSON can be found at http://www.json.org/.
+The JSON strings generated can be validated using any standard JSON validator. Eg. https://jsonlint.com/
 
 # Files
 json_generator.c Actual source file for the JSON generator with implementation of all APIS
