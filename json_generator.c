@@ -12,6 +12,12 @@ static inline int json_get_empty_len(json_str_t *jstr)
 {
 	return (jstr->buf_size - (jstr->free_ptr - jstr->buf) - 1);
 }
+
+/* This will add the incoming string to the JSON string buffer
+ * and flush it out if the buffer is full. Note that the data being
+ * flushed out will always be equal to the size of the buffer unless
+ * this is the last chunk being flushed out on json_end_str()
+ */
 static int json_add_to_str(json_str_t *jstr, char *str)
 {
 	int len = strlen(str);
@@ -25,6 +31,9 @@ static int json_add_to_str(json_str_t *jstr, char *str)
 		len -= copy_len;
 		if (len) {
 			*jstr->free_ptr = '\0';
+			/* Report error if the buffer is full and no flush callback
+			 * is registered
+			 */
 			if (!jstr->flush_cb) {
 				printf("Cannot flush. End of string");
 				return -1;
