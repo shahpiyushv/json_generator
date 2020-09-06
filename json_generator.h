@@ -28,6 +28,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 /** Float precision i.e. number of digits after decimal point */
 #ifndef JSON_FLOAT_PRECISION
 #define JSON_FLOAT_PRECISION 5
@@ -458,5 +463,7 @@ int json_gen_add_to_long_string(json_gen_str_t *jstr, char *val);
  * added after that
  */
 int json_gen_end_long_string(json_gen_str_t *jstr);
-
+#ifdef __cplusplus
+}
+#endif
 #endif
