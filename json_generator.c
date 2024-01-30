@@ -219,6 +219,26 @@ int json_gen_arr_set_int(json_gen_str_t *jstr, int val)
 	return json_gen_set_int(jstr, val);
 }
 
+static int json_gen_set_int64(json_gen_str_t *jstr, int64_t val)
+{
+	jstr->comma_req = true;
+	char str[MAX_INT_IN_STR];
+	snprintf(str, MAX_INT_IN_STR, "%lld", val);
+	return json_gen_add_to_str(jstr, str);
+}
+
+int json_gen_obj_set_int64(json_gen_str_t *jstr, const char *name, int64_t val)
+{
+	json_gen_handle_comma(jstr);
+	json_gen_handle_name(jstr, name);
+	return json_gen_set_int64(jstr, val);
+}
+
+int json_gen_arr_set_int64(json_gen_str_t *jstr, int64_t val)
+{
+	json_gen_handle_comma(jstr);
+	return json_gen_set_int64(jstr, val);
+}
 
 static int json_gen_set_float(json_gen_str_t *jstr, float val)
 {

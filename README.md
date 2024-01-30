@@ -22,8 +22,8 @@ Include the C and H files in your project's build system and that should be enou
 ```text
 ./json_gen 
 Creating JSON string [may require Line wrap enabled on console]
-Expected: {"first_bool":true,"first_int":30,"float_val":54.16430,"my_str":"new_name","null_obj":null,"arr":[["arr_string",false,45.12000,null,25,{"arr_obj_str":"sample"}]],"my_obj":{"only_val":5}}
-Generated: {"first_bool":true,"first_int":30,"float_val":54.16430,"my_str":"new_name","null_obj":null,"arr":[["arr_string",false,45.12000,null,25,{"arr_obj_str":"sample"}]],"my_obj":{"only_val":5}}
+Expected: {"first_bool":true,"first_int":30,"first_int64":-102030405060708090,"float_val":54.16430,"my_str":"new_name","null_obj":null,"arr":[["arr_string",false,45.12000,null,25,908070605040302010,{"arr_obj_str":"sample"}]],"my_obj":{"only_val":5}}
+Generated: {"first_bool":true,"first_int":30,"first_int64":-102030405060708090,"float_val":54.16430,"my_str":"new_name","null_obj":null,"arr":[["arr_string",false,45.12000,null,25,908070605040302010,{"arr_obj_str":"sample"}]],"my_obj":{"only_val":5}}
 Test Passed!
 ```
 
