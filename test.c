@@ -20,12 +20,13 @@
 
 static const char expected_str[] = "{\"first_bool\":true,\"first_int\":30,"\
         "\"first_int64\":-102030405060708090,\"float_val\":54.16430,"\
-        "\"my_str\":\"new_name\",\"null_obj\":null,\"arr\":[[\"arr_string\","\
-        "false,45.12000,null,25,908070605040302010,{\"arr_obj_str\":\"sample\""\
+        "\"float_nan\":null,\"float_inf\":null,\"my_str\":\"new_name\","\
+        "\"null_obj\":null,\"arr\":[[\"arr_string\",false,45.12000,null,"\
+        "null,null,25,908070605040302010,{\"arr_obj_str\":\"sample\""\
         "}]],\"my_obj\":{\"only_val\":5}}";
 
 typedef struct {
-    char buf[256];
+    char buf[512];
     size_t offset;
 } json_gen_test_result_t;
 
@@ -47,10 +48,12 @@ static void flush_str(char *buf, void *priv)
     "first_int": 30,
     "first_int64": -102030405060708090,
     "float_val": 54.1643,
+    "float_nan": null,
+    "float_inf": null,
     "my_str": "new_name",
     "null_obj": null,
     "arr": [
-            ["arr_string", false, 45.2, null, 25, 908070605040302010, {
+            ["arr_string", false, 45.2, null, null, null, 25, 908070605040302010, {
              "arr_obj_str": "sample"
              }]
             ],
@@ -71,6 +74,8 @@ static int json_gen_perform_test(json_gen_test_result_t *result, const char *exp
 	json_gen_obj_set_int(&jstr, "first_int", 30);
 	json_gen_obj_set_int64(&jstr, "first_int64", -102030405060708090);
 	json_gen_obj_set_float(&jstr, "float_val", 54.1643);
+	json_gen_obj_set_float(&jstr, "float_nan", NAN);
+	json_gen_obj_set_float(&jstr, "float_inf", INFINITY);
 	json_gen_obj_set_string(&jstr, "my_str", "new_name");
 	json_gen_obj_set_null(&jstr, "null_obj");
 	json_gen_push_array(&jstr, "arr");
@@ -78,6 +83,8 @@ static int json_gen_perform_test(json_gen_test_result_t *result, const char *exp
 	json_gen_arr_set_string(&jstr, "arr_string");
 	json_gen_arr_set_bool(&jstr, false);
 	json_gen_arr_set_float(&jstr, 45.12);
+	json_gen_arr_set_float(&jstr, NAN);
+	json_gen_arr_set_float(&jstr, INFINITY);
 	json_gen_arr_set_null(&jstr);
 	json_gen_arr_set_int(&jstr, 25);
 	json_gen_arr_set_int64(&jstr, 908070605040302010);

@@ -14,6 +14,7 @@
  *   limitations under the License.
  */
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
@@ -223,7 +224,7 @@ static int json_gen_set_int64(json_gen_str_t *jstr, int64_t val)
 {
 	jstr->comma_req = true;
 	char str[MAX_INT_IN_STR];
-	snprintf(str, MAX_INT_IN_STR, "%lld", val);
+    snprintf(str, MAX_INT_IN_STR, "%" PRId64, val);
 	return json_gen_add_to_str(jstr, str);
 }
 
@@ -247,16 +248,35 @@ static int json_gen_set_float(json_gen_str_t *jstr, float val)
 	snprintf(str, MAX_FLOAT_IN_STR, "%.*f", JSON_FLOAT_PRECISION, val);
 	return json_gen_add_to_str(jstr, str);
 }
+static int json_gen_set_null(json_gen_str_t *jstr)
+{
+	jstr->comma_req = true;
+	return json_gen_add_to_str(jstr, "null");
+}
 int json_gen_obj_set_float(json_gen_str_t *jstr, const char *name, float val)
 {
 	json_gen_handle_comma(jstr);
 	json_gen_handle_name(jstr, name);
-	return json_gen_set_float(jstr, val);
+    if (isnan(val) || isinf(val))
+    {
+        return json_gen_set_null(jstr);
+    }
+    else
+    {
+	    return json_gen_set_float(jstr, val);
+    }
 }
 int json_gen_arr_set_float(json_gen_str_t *jstr, float val)
 {
 	json_gen_handle_comma(jstr);
-	return json_gen_set_float(jstr, val);
+    if (isnan(val) || isinf(val))
+    {
+        return json_gen_set_null(jstr);
+    }
+    else
+    {
+	    return json_gen_set_float(jstr, val);
+    }
 }
 
 static int json_gen_set_string(json_gen_str_t *jstr, const char *val)
@@ -308,11 +328,6 @@ int json_gen_add_to_long_string(json_gen_str_t *jstr, const char *val)
 int json_gen_end_long_string(json_gen_str_t *jstr)
 {
     return json_gen_add_to_str(jstr, "\"");
-}
-static int json_gen_set_null(json_gen_str_t *jstr)
-{
-	jstr->comma_req = true;
-	return json_gen_add_to_str(jstr, "null");
 }
 int json_gen_obj_set_null(json_gen_str_t *jstr, const char *name)
 {

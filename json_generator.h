@@ -25,6 +25,7 @@
 #ifndef _JSON_GENERATOR_H
 #define _JSON_GENERATOR_H
 
+#include <math.h>
 #include <stdint.h>
 #include <stdbool.h>
 
@@ -319,6 +320,7 @@ int json_gen_obj_set_int64(json_gen_str_t *jstr, const char *name, int64_t val);
 /** Add a float element to an object
  *
  * This adds a float element to an object. Eg. "float_val":23.8
+* If the float value is NaN or Infinity, a null value will be added.
  *
  * \note This must be called between json_gen_start_object()/json_gen_push_object()
  * and json_gen_end_object()/json_gen_pop_object()
